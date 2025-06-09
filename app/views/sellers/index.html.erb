@@ -1,10 +1,16 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold text-primary mb-6">Available Sellers</h1>
+<% content_for :title do %>Available Sellers - Lumrais Rsp<% end %>
 
-  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-    <turbo-frame id="promote-role">
-      <%= render "users/role_status", user: current_user %>
-    </turbo-frame>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Available Sellers</h1>
+  </div>
+
+  <div class="dashboard-card mb-8">
+    <div class="dashboard-card-body">
+      <turbo-frame id="promote-role">
+        <%= render "users/role_status", user: current_user %>
+      </turbo-frame>
+    </div>
   </div>
 
   <% if @sellers.empty? %>
@@ -12,27 +18,35 @@
       <p class="text-gray-700">No sellers available at the moment.</p>
     </div>
   <% else %>
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-      <ul class="divide-y divide-gray-200">
-        <% @sellers.each do |seller| %>
-          <li class="p-4 hover:bg-gray-50 transition duration-150">
-            <div class="flex items-center justify-between">
-              <div>
-                <%= link_to seller.name, seller_path(seller), class: "text-lg font-medium text-primary hover:text-primary-dark" %>
+    <div class="dashboard-card">
+      <div class="dashboard-card-header">
+        <h2 class="dashboard-card-title">Seller Listings</h2>
+      </div>
+      
+      <div class="dashboard-card-body p-0">
+        <ul class="list-divided">
+          <% @sellers.each do |seller| %>
+            <li class="list-item">
+              <div class="flex items-center justify-between">
+                <div>
+                  <%= link_to seller.name, seller_path(seller), class: "text-lg font-medium text-primary hover:text-primary-dark" %>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="badge badge-blue">
+                    <%= seller.cpu %> CPUs
+                  </span>
+                  <span class="badge badge-green">
+                    <%= seller.ram %> MB RAM
+                  </span>
+                </div>
               </div>
-              <div class="flex items-center space-x-2">
-                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                  <%= seller.cpu %> CPUs
-                </span>
-                <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                  <%= seller.ram %> MB RAM
-                </span>
-              </div>
-            </div>
-          </li>
-        <% end %>
-      </ul>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 </div>
+
+<% parent_layout "dashboard" %>
 

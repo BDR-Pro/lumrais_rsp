@@ -1,0 +1,43 @@
+<% content_for :head do %>
+  <title><%= content_for(:title) || "Authentication - Lumrais Rsp" %></title>
+<% end %>
+
+<% content_for :styles do %>
+  <style>
+    /* Auth-specific styles */
+    .auth-container {
+      @apply container mx-auto px-4 py-12 max-w-md;
+    }
+    
+    .auth-card {
+      @apply bg-white rounded-lg shadow-md overflow-hidden;
+    }
+    
+    .auth-header {
+      @apply px-6 py-4 bg-gray-50 border-b border-gray-200;
+    }
+    
+    .auth-body {
+      @apply p-6;
+    }
+    
+    .auth-footer {
+      @apply px-6 py-4 bg-gray-50 border-t border-gray-200 text-sm text-gray-600;
+    }
+    
+    .auth-link {
+      @apply text-primary hover:text-primary-dark;
+    }
+    
+    .auth-button {
+      @apply btn btn-primary w-full justify-center;
+    }
+    
+    .auth-divider {
+      @apply my-6 border-t border-gray-200;
+    }
+  </style>
+<% end %>
+
+<%= render template: "layouts/base" %>
+
