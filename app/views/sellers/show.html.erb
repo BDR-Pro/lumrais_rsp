@@ -1,46 +1,39 @@
-<% content_for :title, @seller.name %>
-<% content_for :meta_description, "Details about #{@seller.name} on Lumrais RSP" %>
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-4">
+    <%= link_to sellers_path, class: "text-primary hover:text-primary-dark flex items-center" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+      </svg>
+      Back to Sellers
+    <% end %>
+  </div>
 
-<% content_for :content do %>
-  <div class="container mx-auto px-4 py-8">
-    <div class="mb-4">
-      <%= link_to sellers_path, class: "text-primary hover:text-primary-dark flex items-center" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-        </svg>
-        Back to Sellers
-      <% end %>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-      <div class="p-6">
-        <h1 class="text-3xl font-bold text-primary mb-6"><%= @seller.name %></h1>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div class="bg-blue-50 p-4 rounded-lg">
-            <div class="text-sm text-blue-600 mb-1">CPU</div>
-            <div class="text-2xl font-bold text-blue-800"><%= @seller.cpu %></div>
-          </div>
-          
-          <div class="bg-green-50 p-4 rounded-lg">
-            <div class="text-sm text-green-600 mb-1">RAM</div>
-            <div class="text-2xl font-bold text-green-800"><%= @seller.ram %> MB</div>
-          </div>
-          
-          <div class="bg-purple-50 p-4 rounded-lg">
-            <div class="text-sm text-purple-600 mb-1">Location</div>
-            <div class="text-2xl font-bold text-purple-800"><%= @seller.location %></div>
-          </div>
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="p-6">
+      <h1 class="text-3xl font-bold text-primary mb-6"><%= @seller.name %></h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <div class="text-sm text-blue-600 mb-1">CPU</div>
+          <div class="text-2xl font-bold text-blue-800"><%= @seller.cpu %></div>
         </div>
         
-        <div class="mt-8">
-          <%= link_to "Download VPN Config", vpn_config_path(@seller), 
-              class: "inline-flex items-center px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors" %>
+        <div class="bg-green-50 p-4 rounded-lg">
+          <div class="text-sm text-green-600 mb-1">RAM</div>
+          <div class="text-2xl font-bold text-green-800"><%= @seller.ram %> MB</div>
         </div>
+        
+        <div class="bg-purple-50 p-4 rounded-lg">
+          <div class="text-sm text-purple-600 mb-1">Location</div>
+          <div class="text-2xl font-bold text-purple-800"><%= @seller.location %></div>
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <%= link_to "Download VPN Config", vpn_config_path(@seller), 
+            class: "inline-flex items-center px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors" %>
       </div>
     </div>
   </div>
-<% end %>
-
-<%= render template: 'layouts/base' %>
+</div>
 

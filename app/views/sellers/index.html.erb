@@ -1,45 +1,38 @@
-<% content_for :title, "Available Sellers" %>
-<% content_for :meta_description, "Browse available sellers on Lumrais RSP" %>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-primary mb-6">Available Sellers</h1>
 
-<% content_for :content do %>
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-primary mb-6">Available Sellers</h1>
-
-    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-      <turbo-frame id="promote-role">
-        <%= render "users/role_status", user: current_user %>
-      </turbo-frame>
-    </div>
-
-    <% if @sellers.empty? %>
-      <div class="bg-gray-100 rounded-lg p-6 text-center">
-        <p class="text-gray-700">No sellers available at the moment.</p>
-      </div>
-    <% else %>
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <ul class="divide-y divide-gray-200">
-          <% @sellers.each do |seller| %>
-            <li class="p-4 hover:bg-gray-50 transition duration-150">
-              <div class="flex items-center justify-between">
-                <div>
-                  <%= link_to seller.name, seller_path(seller), class: "text-lg font-medium text-primary hover:text-primary-dark" %>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                    <%= seller.cpu %> CPUs
-                  </span>
-                  <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                    <%= seller.ram %> MB RAM
-                  </span>
-                </div>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <turbo-frame id="promote-role">
+      <%= render "users/role_status", user: current_user %>
+    </turbo-frame>
   </div>
-<% end %>
 
-<%= render template: 'layouts/base' %>
+  <% if @sellers.empty? %>
+    <div class="bg-gray-100 rounded-lg p-6 text-center">
+      <p class="text-gray-700">No sellers available at the moment.</p>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <ul class="divide-y divide-gray-200">
+        <% @sellers.each do |seller| %>
+          <li class="p-4 hover:bg-gray-50 transition duration-150">
+            <div class="flex items-center justify-between">
+              <div>
+                <%= link_to seller.name, seller_path(seller), class: "text-lg font-medium text-primary hover:text-primary-dark" %>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                  <%= seller.cpu %> CPUs
+                </span>
+                <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                  <%= seller.ram %> MB RAM
+                </span>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
 
