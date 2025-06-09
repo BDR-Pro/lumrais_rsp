@@ -1,0 +1,17 @@
+<h1>Available Sellers</h1>
+
+<turbo-frame id="promote-role">
+  <%= render "users/role_status", user: current_user %>
+</turbo-frame>
+
+<% if @sellers.empty? %>
+  <p>No sellers available at the moment.</p>
+<% else %>
+  <ul>
+    <% @sellers.each do |seller| %>
+      <li>
+        <%= link_to seller.name, seller_path(seller) %> - <%= seller.cpu %> CPUs
+      </li>
+    <% end %>
+  </ul>
+<% end %>

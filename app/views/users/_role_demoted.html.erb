@@ -1,0 +1,5 @@
+<p class="text-muted">You're now a buyer again.</p>
+<%= button_to "Become a Seller", promote_to_seller_path,
+      method: :post,
+      data: { turbo_frame: "promote-role" },
+      class: "btn btn-success" %>

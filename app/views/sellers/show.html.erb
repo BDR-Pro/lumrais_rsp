@@ -1,0 +1,6 @@
+<h2><%= @seller.name %></h2>
+<p>CPU: <%= @seller.cpu %></p>
+<p>RAM: <%= @seller.ram %> MB</p>
+<p>Location: <%= @seller.location %></p>
+
+<%= link_to "Download VPN Config", vpn_config_path(@seller), class: "btn btn-primary" %>

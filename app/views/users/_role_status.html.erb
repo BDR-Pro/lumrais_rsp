@@ -1,0 +1,13 @@
+<% if user.buyer? %>
+  <p class="text-muted">You're now a buyer again.</p>
+  <%= button_to "Become a Seller", promote_to_seller_path,
+        method: :post,
+        data: { turbo_frame: "promote-role" },
+        class: "btn btn-success" %>
+<% elsif user.seller? %>
+  <p class="text-success">You're now a seller.</p>
+  <%= button_to "Switch back to Buyer", demote_to_buyer_path,
+        method: :post,
+        data: { turbo_frame: "promote-role" },
+        class: "btn btn-warning" %>
+<% end %>
