@@ -1,5 +1,6 @@
-<p class="text-muted">You're now a buyer again.</p>
+<p class="text-gray-600 mb-3">You're now a buyer again.</p>
 <%= button_to "Become a Seller", promote_to_seller_path,
       method: :post,
       data: { turbo_frame: "promote-role" },
-      class: "btn btn-success" %>
+      class: "inline-flex items-center px-4 py-2 bg-success text-white font-medium rounded-md hover:bg-success-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-success transition-colors" %>
+
