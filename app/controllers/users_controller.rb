@@ -43,7 +43,9 @@ class UsersController < ApplicationController
       cpu: 4,
       ram: 8192,
       public_ip: request.remote_ip,
+      location: "Unknown",
       available: true
     )
   end
 end
+
