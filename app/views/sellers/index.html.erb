@@ -1,8 +1,6 @@
 <h1>Available Sellers</h1>
 
-<turbo-frame id="promote-role">
-  <%= render "users/role_status", user: current_user %>
-</turbo-frame>
+<%= render "users/role_status", user: current_user %>
 
 <% if @sellers.empty? %>
   <p>No sellers available at the moment.</p>

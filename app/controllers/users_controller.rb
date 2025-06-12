@@ -37,13 +37,26 @@ class UsersController < ApplicationController
   end
 
   def create_seller_record
+    vpn_ip = next_available_vpn_ip # Implement logic
+
     Seller.create!(
       user: current_user,
       name: current_user.email.split("@").first.titleize,
       cpu: 4,
       ram: 8192,
-      public_ip: request.remote_ip,
+      vpn_ip: vpn_ip,
       available: true
     )
   end
+
+  def next_available_vpn_ip
+    used_ips = Seller.pluck(:vpn_ip)
+    base = IPAddr.new("10.8.0.2")
+    loop do
+      candidate = base.to_s
+      return candidate unless used_ips.include?(candidate)
+      base = base.succ
+    end
+  end
+
 end

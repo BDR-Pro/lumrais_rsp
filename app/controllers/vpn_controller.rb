@@ -3,10 +3,16 @@ class VpnController < ApplicationController
 
   def config
     seller = Seller.find(params[:id])
-    template = File.read(Rails.root.join("config/vpn/template.ovpn"))
-    rendered = template.gsub("{{SERVER_IP}}", seller.public_ip)
+    raise "Access Denied" unless seller.user == current_user
 
-    send_data rendered,
+    # Customize base template
+    config_path = Rails.root.join("app", "assets", "vpn", "lumrais.ovpn")
+    raise "Configuration file not found" unless File.exist?(config_path)
+    base_config = File.read(config_path)
+
+    personalized = base_config.gsub("{{COMMON_NAME}}", seller.name.parameterize)
+
+    send_data personalized,
       filename: "lumrais_#{seller.name.parameterize}.ovpn",
       type: "application/x-openvpn-profile"
   end
