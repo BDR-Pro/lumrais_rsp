@@ -102,6 +102,6 @@ development:
   <<: *default
   database: lumrais_rsp_development
   username: postgres
-  password: Baderdb
+  #password: Baderdb
   host: localhost
   port: 5432

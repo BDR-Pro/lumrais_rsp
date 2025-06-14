@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   post "promote_to_seller", to: "users#promote", as: :promote_to_seller
   post "demote_to_buyer", to: "users#demote", as: :demote_to_buyer
 
-  get 'vpn/:id', to: 'vpn#config', as: 'vpn_config'
   root "sellers#index"
 
 end
