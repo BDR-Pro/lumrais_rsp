@@ -7,4 +7,8 @@ class PagesController < ApplicationController
 
   def infra_action
   end
+
+  def landing
+  
+  end
 end

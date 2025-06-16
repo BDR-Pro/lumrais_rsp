@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   post "demote_to_buyer", to: "users#demote", as: :demote_to_buyer
 
   root "sellers#index"
+ 
 
   # Static pages
   vpn_root = Rails.application.config.vpn_root || "https://vpn.yourdomain.com"
@@ -33,6 +34,9 @@ Rails.application.routes.draw do
   get "/quick_run", to: "pages#quick_run"
   get "/infra_action", to: "pages#infra_action"
 
+  #Landing page
+  get "/landing", to: "pages#landing"
+  
   # Profile
   resource :profile, only: [:show]
   get "/profile/payment", to: "payments#new"
