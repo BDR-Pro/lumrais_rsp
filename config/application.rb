@@ -23,5 +23,18 @@ module LumraisRsp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Internationalization
+    config.i18n.available_locales = [:en, :es, :fr, :de]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
+    config.time_zone = 'UTC'
+    
+    # Enable locale-specific formatting
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    
+    # Enable timezone support
+    config.active_record.default_timezone = :utc
+    config.active_record.time_zone_aware_attributes = true
   end
 end

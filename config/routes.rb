@@ -52,3 +52,9 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
 
 end
+
+# Security endpoints
+post '/csp_report', to: 'application#csp_report'
+
+# Health check endpoint
+get '/health', to: 'health#show'

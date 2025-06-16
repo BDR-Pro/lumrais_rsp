@@ -40,6 +40,23 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Security and Rate Limiting
+gem 'rack-attack'  # For rate limiting
+gem 'secure_headers'  # For security headers
+gem 'sentry-ruby'  # For error tracking
+gem 'sentry-rails'  # For Rails integration with Sentry
+gem 'sentry-sidekiq'  # For Sidekiq integration with Sentry
+
+# Performance and Caching
+gem 'redis'  # For caching and background jobs
+gem 'sidekiq'  # For background job processing
+gem 'sidekiq-scheduler'  # For scheduled jobs
+gem 'connection_pool'  # For Redis connection pooling
+
+# Internationalization
+gem 'i18n-tasks'  # For managing translations
+gem 'timezone'  # For timezone handling
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -49,6 +66,14 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Additional development tools
+  gem 'rubocop-performance'  # For performance linting
+  gem 'rubocop-rspec'  # For RSpec linting
+  gem 'annotate'  # For model annotations
+  gem 'bullet'  # For N+1 query detection
+  gem 'rack-mini-profiler'  # For performance profiling
+  gem 'letter_opener'  # For email preview in development
 end
 
 group :development do
