@@ -1,0 +1,8 @@
+<div class="max-w-3xl mx-auto p-6">
+  <h1 class="text-2xl font-semibold mb-4">Infra Action</h1>
+  <p class="mb-4">Upload your Terraform (TF) files to provision infrastructure quickly:</p>
+  <%= form_with url: infra_upload_path, method: :post, local: true, html: { multipart: true } do |form| %>
+    <%= form.file_field :tf_file, class: "border px-3 py-2 rounded" %>
+    <%= form.submit "Upload", class: "ml-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700" %>
+  <% end %>
+</div>

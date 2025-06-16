@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "payments/new"
+  get "payments/create"
+  get "profiles/show"
+  get "pages/download"
+  get "pages/quick_run"
+  get "pages/infra_action"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -19,5 +25,18 @@ Rails.application.routes.draw do
   post "demote_to_buyer", to: "users#demote", as: :demote_to_buyer
 
   root "sellers#index"
+
+  # Static pages
+  vpn_root = Rails.application.config.vpn_root || "https://vpn.yourdomain.com"
+  get "/vpn", to: redirect(vpn_root)
+  get "/download", to: "pages#download"
+  get "/quick_run", to: "pages#quick_run"
+  get "/infra_action", to: "pages#infra_action"
+
+  # Profile
+  resource :profile, only: [:show]
+  get "/profile/payment", to: "payments#new"
+  post "/profile/payment", to: "payments#create"
+  get "/profile/withdraw", to: "sellers#withdraw"
 
 end

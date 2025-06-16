@@ -8,4 +8,7 @@ class SellersController < ApplicationController
   def show
     @seller = Seller.find(params[:id])
   end
+  def withdraw
+    # Add logic for withdrawal
+  end
 end
