@@ -1,0 +1,53 @@
+<%# 
+  Usage:
+  <%= render "components/pricing_plans",
+    plans: [
+      {
+        name: "Basic",
+        price: "$9",
+        period: "month",
+        features: ["Feature 1", "Feature 2", "Feature 3"],
+        cta: "Get Started",
+        popular: false
+      },
+      {
+        name: "Pro",
+        price: "$29",
+        period: "month",
+        features: ["All Basic features", "Pro Feature 1", "Pro Feature 2"],
+        cta: "Get Started",
+        popular: true
+      }
+    ]
+  %>
+%>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  <% plans.each do |plan| %>
+    <div class="card bg-base-100 shadow-xl <%= 'border-2 border-primary' if plan[:popular] %>">
+      <% if plan[:popular] %>
+        <div class="badge badge-primary absolute -top-3 -right-3">Popular</div>
+      <% end %>
+      <div class="card-body">
+        <h2 class="card-title"><%= plan[:name] %></h2>
+        <div class="mt-4">
+          <span class="text-4xl font-bold"><%= plan[:price] %></span>
+          <span class="text-base-content/70">/<%= plan[:period] %></span>
+        </div>
+        <ul class="mt-6 space-y-4">
+          <% plan[:features].each do |feature| %>
+            <li class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <%= feature %>
+            </li>
+          <% end %>
+        </ul>
+        <div class="card-actions justify-end mt-8">
+          <button class="btn btn-primary w-full"><%= plan[:cta] %></button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div> 

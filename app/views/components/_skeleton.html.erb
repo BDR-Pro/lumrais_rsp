@@ -1,0 +1,42 @@
+<%# 
+  Usage:
+  <%= render "components/skeleton", type: "card" %>
+  
+  Types: text, avatar, card, list
+%>
+
+<% case type %>
+<% when "text" %>
+  <div class="animate-pulse">
+    <div class="h-4 bg-base-300 rounded w-3/4"></div>
+  </div>
+
+<% when "avatar" %>
+  <div class="animate-pulse">
+    <div class="rounded-full bg-base-300 h-12 w-12"></div>
+  </div>
+
+<% when "card" %>
+  <div class="animate-pulse">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <div class="h-4 bg-base-300 rounded w-1/4 mb-4"></div>
+        <div class="h-4 bg-base-300 rounded w-3/4 mb-2"></div>
+        <div class="h-4 bg-base-300 rounded w-2/4"></div>
+      </div>
+    </div>
+  </div>
+
+<% when "list" %>
+  <div class="animate-pulse space-y-4">
+    <% 3.times do %>
+      <div class="flex items-center space-x-4">
+        <div class="rounded-full bg-base-300 h-12 w-12"></div>
+        <div class="flex-1 space-y-2">
+          <div class="h-4 bg-base-300 rounded w-3/4"></div>
+          <div class="h-4 bg-base-300 rounded w-1/2"></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %> 

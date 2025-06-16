@@ -1,0 +1,37 @@
+<%# 
+  Usage:
+  <%= form_with(model: @user, class: "space-y-6") do |f| %>
+    <%= render "components/profile_form", f: f %>
+  <% end %>
+%>
+
+<div class="form-control w-full">
+  <%= f.label :email, class: "label" %>
+  <%= f.email_field :email, class: "input input-bordered w-full" %>
+</div>
+
+<div class="form-control w-full">
+  <%= f.label :name, class: "label" %>
+  <%= f.text_field :name, class: "input input-bordered w-full" %>
+</div>
+
+<div class="form-control w-full">
+  <%= f.label :avatar, class: "label" %>
+  <%= f.file_field :avatar, class: "file-input file-input-bordered w-full" %>
+</div>
+
+<div class="form-control w-full">
+  <%= f.label :bio, class: "label" %>
+  <%= f.text_area :bio, class: "textarea textarea-bordered h-24" %>
+</div>
+
+<div class="form-control">
+  <label class="label cursor-pointer">
+    <span class="label-text">Email notifications</span>
+    <%= f.check_box :email_notifications, class: "toggle toggle-primary" %>
+  </label>
+</div>
+
+<div class="form-control mt-6">
+  <%= f.submit class: "btn btn-primary" %>
+</div> 
