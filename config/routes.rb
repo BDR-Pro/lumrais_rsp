@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get "dashboard/index"
+  end
   get "payments/new"
   get "payments/create"
   get "profiles/show"
@@ -42,5 +45,10 @@ Rails.application.routes.draw do
   get "/profile/payment", to: "payments#new"
   post "/profile/payment", to: "payments#create"
   get "/profile/withdraw", to: "sellers#withdraw"
+
+
+  #admin routes
+  namespace :admin do
+  get "dashboard", to: "dashboard#index"
 
 end

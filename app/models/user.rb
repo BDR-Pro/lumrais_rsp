@@ -27,4 +27,20 @@ class User < ApplicationRecord
   def set_default_role
     self.role ||= "buyer"
   end
+  #protects the admin role from being set by users
+  def set_admin_role
+    if self.role != "admin"
+      errors.add(:role, "cannot be set to admin by users")
+      throw(:abort)
+    else
+      self.role = "admin"
+    end
+  end
+  def admin?
+    if role == "admin"
+      true
+    else
+      false
+    end
+  end
 end
