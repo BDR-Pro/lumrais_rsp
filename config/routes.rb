@@ -27,19 +27,27 @@ Rails.application.routes.draw do
   post "promote_to_seller", to: "users#promote", as: :promote_to_seller
   post "demote_to_buyer", to: "users#demote", as: :demote_to_buyer
 
-  root "sellers#index"
- 
+  resources :products
+  
+  get "/about", to: "pages#about", as: :about
+  get "/contact", to: "pages#contact", as: :contact
+  get "/terms",   to: "pages#terms",   as: :terms
+  get "/privacy", to: "pages#privacy", as: :privacy
+  get "/settings", to: "pages#settings"
+
 
   # Static pages
-  vpn_root = Rails.application.config.vpn_root || "https://vpn.yourdomain.com"
+  vpn_root = Rails.application.config.vpn_root
   get "/vpn", to: redirect(vpn_root)
   get "/download", to: "pages#download"
   get "/quick_run", to: "pages#quick_run"
   get "/infra_action", to: "pages#infra_action"
 
   #Landing page
+    
+  root to: "pages#landing" 
   get "/landing", to: "pages#landing"
-  
+    
   # Profile
   resource :profile, only: [:show]
   get "/profile/payment", to: "payments#new"
@@ -51,10 +59,13 @@ Rails.application.routes.draw do
   namespace :admin do
   get "dashboard", to: "dashboard#index"
 
-end
 
-# Security endpoints
-post '/csp_report', to: 'application#csp_report'
+  # Security endpoints
+  post '/csp_report', to: 'application#csp_report'
 
-# Health check endpoint
-get '/health', to: 'health#show'
+  # Health check endpoint
+  get '/health', to: 'health#show'
+  end
+
+  end
+  

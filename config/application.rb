@@ -36,5 +36,8 @@ module LumraisRsp
     # Enable timezone support
     config.active_record.default_timezone = :utc
     config.active_record.time_zone_aware_attributes = true
+    
+    #VPN
+    config.vpn_root = ENV['VPN_ROOT'] || 'https://vpn.yourdomain.com'
   end
 end

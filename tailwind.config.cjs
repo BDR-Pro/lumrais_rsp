@@ -19,13 +19,11 @@ module.exports = {
     themes: [
       {
         light: {
-          ...require("daisyui/src/theming/themes")["light"],
           primary: "#10b981", // emerald-500
           "primary-focus": "#059669", // emerald-600
           "primary-content": "#ffffff",
         },
         dark: {
-          ...require("daisyui/src/theming/themes")["dim"],
           primary: "#10b981", // emerald-500
           "primary-focus": "#059669", // emerald-600
           "primary-content": "#ffffff",

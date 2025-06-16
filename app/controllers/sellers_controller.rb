@@ -9,6 +9,11 @@ class SellersController < ApplicationController
     @seller = Seller.find(params[:id])
   end
   def withdraw
-    # Add logic for withdrawal
+    @seller = current_user.seller
+    if @seller
+      @transactions = @seller.transactions.where(transaction_type: :withdrawal)
+    else
+      redirect_to profile_path, alert: "You are not a seller."
+    end
   end
 end

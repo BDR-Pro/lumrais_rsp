@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   after_initialize :set_default_role, if: :new_record?
 
+  has_one_attached :avatar
+
   def buyer?
     role == "buyer"
   end
@@ -22,6 +24,10 @@ class User < ApplicationRecord
     update(role: "seller")
   end
 
+  def avatar_url
+    avatar.attached? ? avatar.service_url : "https://via.placeholder.com/150"
+  end
+  
   private
 
   def set_default_role
@@ -43,4 +49,5 @@ class User < ApplicationRecord
       false
     end
   end
+
 end

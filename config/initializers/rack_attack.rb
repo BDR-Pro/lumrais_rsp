@@ -1,4 +1,4 @@
-class Rack::Attack
+class Rack::Attack 
   # Store the number of requests by IP address
   throttle('req/ip', limit: 300, period: 5.minutes) do |req|
     req.ip
@@ -26,7 +26,7 @@ class Rack::Attack
   end
 
   # Log blocked requests
-  self.blocklisted_response = lambda do |env|
+  self.blocklisted_responder = lambda do |env|
     [ 403, { 'Content-Type' => 'application/json' }, [{ error: 'Blocked' }.to_json] ]
   end
 end 
