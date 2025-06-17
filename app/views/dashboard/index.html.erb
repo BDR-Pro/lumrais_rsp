@@ -1,0 +1,97 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Dashboard</h1>
+    <% if current_user.seller? %>
+      <%= link_to "Seller Dashboard", seller_dashboard_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="stat bg-base-100 shadow rounded-lg">
+      <div class="stat-title">Total Earnings</div>
+      <div class="stat-value text-primary">$<%= number_with_precision(@total_earnings, precision: 2) %></div>
+    </div>
+    
+    <div class="stat bg-base-100 shadow rounded-lg">
+      <div class="stat-title">Total Spent</div>
+      <div class="stat-value text-secondary">$<%= number_with_precision(@total_spent, precision: 2) %></div>
+    </div>
+
+    <div class="stat bg-base-100 shadow rounded-lg">
+      <div class="stat-title">Active Jobs</div>
+      <div class="stat-value"><%= @recent_jobs.active.count %></div>
+    </div>
+
+    <div class="stat bg-base-100 shadow rounded-lg">
+      <div class="stat-title">Completed Jobs</div>
+      <div class="stat-value"><%= @recent_jobs.completed.count %></div>
+    </div>
+  </div>
+
+  <!-- Recent Jobs -->
+  <div class="card bg-base-100 shadow-xl mb-8">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Recent Jobs</h2>
+      <% if @recent_jobs.any? %>
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @recent_jobs.each do |job| %>
+                <tr>
+                  <td><%= job.id %></td>
+                  <td><span class="badge badge-<%= job.status %>"><%= job.status.titleize %></span></td>
+                  <td><%= time_ago_in_words(job.created_at) %> ago</td>
+                  <td><%= link_to "View", job_path(job), class: "btn btn-sm" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-center text-gray-500">No recent jobs</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Recent Transactions</h2>
+      <% if @recent_transactions.any? %>
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @recent_transactions.each do |transaction| %>
+                <tr>
+                  <td><span class="badge badge-<%= transaction.transaction_type %>"><%= transaction.transaction_type.titleize %></span></td>
+                  <td>$<%= number_with_precision(transaction.amount, precision: 2) %></td>
+                  <td><span class="badge badge-<%= transaction.status %>"><%= transaction.status.titleize %></span></td>
+                  <td><%= time_ago_in_words(transaction.created_at) %> ago</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-center text-gray-500">No recent transactions</p>
+      <% end %>
+    </div>
+  </div>
+</div> 

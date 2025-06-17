@@ -1,0 +1,100 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Seller Dashboard</h1>
+    <%= link_to "Main Dashboard", dashboard_path, class: "btn btn-ghost" %>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="stat bg-base-100 shadow rounded-lg">
+      <div class="stat-title">Total Earnings</div>
+      <div class="stat-value text-primary">$<%= number_with_precision(@total_earnings, precision: 2) %></div>
+    </div>
+    
+    <div class="stat bg-base-100 shadow rounded-lg">
+      <div class="stat-title">Active Jobs</div>
+      <div class="stat-value"><%= @active_jobs.count %></div>
+    </div>
+
+    <div class="stat bg-base-100 shadow rounded-lg">
+      <div class="stat-title">Available CPU</div>
+      <div class="stat-value"><%= @available_resources[:cpu] %> cores</div>
+    </div>
+
+    <div class="stat bg-base-100 shadow rounded-lg">
+      <div class="stat-title">Available RAM</div>
+      <div class="stat-value"><%= @available_resources[:ram] %> GB</div>
+    </div>
+  </div>
+
+  <!-- Active Jobs -->
+  <div class="card bg-base-100 shadow-xl mb-8">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Active Jobs</h2>
+      <% if @active_jobs.any? %>
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Buyer</th>
+                <th>CPU Usage</th>
+                <th>RAM Usage</th>
+                <th>Started</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @active_jobs.each do |job| %>
+                <tr>
+                  <td><%= job.id %></td>
+                  <td><%= job.buyer.email %></td>
+                  <td><%= job.cpu_usage %> cores</td>
+                  <td><%= job.ram_usage %> GB</td>
+                  <td><%= time_ago_in_words(job.created_at) %> ago</td>
+                  <td>
+                    <%= link_to "View", job_path(job), class: "btn btn-sm" %>
+                    <%= button_to "Stop", stop_job_path(job), method: :post, class: "btn btn-sm btn-error", data: { confirm: "Are you sure you want to stop this job?" } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-center text-gray-500">No active jobs</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Recent Earnings -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Recent Earnings</h2>
+      <% if @recent_earnings.any? %>
+        <div class="overflow-x-auto">
+          <table class="table w-full">
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Job ID</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @recent_earnings.each do |transaction| %>
+                <tr>
+                  <td class="text-success">+$<%= number_with_precision(transaction.amount, precision: 2) %></td>
+                  <td><%= transaction.job_id %></td>
+                  <td><%= time_ago_in_words(transaction.created_at) %> ago</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-center text-gray-500">No recent earnings</p>
+      <% end %>
+    </div>
+  </div>
+</div> 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_16_171550) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_17_183843) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,6 +66,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_171550) do
     t.index ["seller_id"], name: "index_jobs_on_seller_id"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.integer "cpu_cores", null: false
+    t.integer "ram_gb", null: false
+    t.integer "storage_gb", null: false
+    t.boolean "featured", default: false
+    t.boolean "active", default: true
+    t.bigint "seller_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active"], name: "index_products_on_active"
+    t.index ["featured"], name: "index_products_on_featured"
+    t.index ["seller_id"], name: "index_products_on_seller_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.integer "reviewer_id", null: false
@@ -87,6 +104,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_171550) do
     t.boolean "available"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "storage"
+    t.decimal "price_per_hour"
     t.index ["user_id"], name: "index_sellers_on_user_id"
   end
 
@@ -129,6 +148,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_171550) do
   add_foreign_key "hardware_specs", "sellers"
   add_foreign_key "jobs", "users", column: "buyer_id"
   add_foreign_key "jobs", "users", column: "seller_id"
+  add_foreign_key "products", "users", column: "seller_id"
   add_foreign_key "reviews", "jobs"
   add_foreign_key "reviews", "users", column: "reviewee_id"
   add_foreign_key "reviews", "users", column: "reviewer_id"

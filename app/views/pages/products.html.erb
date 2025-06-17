@@ -1,0 +1,85 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Our Products</h1>
+    <% if user_signed_in? %>
+      <%= link_to "My Jobs", jobs_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <!-- Product Filters -->
+  <div class="card bg-base-200 mb-8">
+    <div class="card-body">
+      <div class="flex flex-wrap gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">CPU Cores</span>
+          </label>
+          <select class="select select-bordered w-full max-w-xs">
+            <option>Any</option>
+            <option>1-2 cores</option>
+            <option>3-4 cores</option>
+            <option>5+ cores</option>
+          </select>
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">RAM</span>
+          </label>
+          <select class="select select-bordered w-full max-w-xs">
+            <option>Any</option>
+            <option>1-4 GB</option>
+            <option>5-8 GB</option>
+            <option>9+ GB</option>
+          </select>
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Price Range</span>
+          </label>
+          <select class="select select-bordered w-full max-w-xs">
+            <option>Any</option>
+            <option>$0-$10/hour</option>
+            <option>$11-$20/hour</option>
+            <option>$21+/hour</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <% @products.each do |product| %>
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title"><%= product.name %></h2>
+          <p class="text-gray-600"><%= product.description %></p>
+          
+          <div class="stats shadow mt-4">
+            <div class="stat">
+              <div class="stat-title">CPU</div>
+              <div class="stat-value"><%= product.cpu %> cores</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">RAM</div>
+              <div class="stat-value"><%= product.ram %> GB</div>
+            </div>
+          </div>
+
+          <div class="card-actions justify-between items-center mt-4">
+            <div class="text-2xl font-bold">$<%= number_with_precision(product.price_per_hour, precision: 2) %>/hour</div>
+            <%= link_to "View Details", product_path(product), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- No Products Message -->
+  <% if @products.empty? %>
+    <div class="text-center py-12">
+      <h3 class="text-xl font-semibold mb-4">No Products Available</h3>
+      <p class="text-gray-600">Check back later for new products.</p>
+    </div>
+  <% end %>
+</div> 

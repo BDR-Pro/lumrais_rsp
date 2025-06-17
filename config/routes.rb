@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
+  # Dashboard routes
+  get "/dashboard", to: "dashboard#index", as: :dashboard
+  get "/seller_dashboard", to: "dashboard#seller", as: :seller_dashboard
+
   # User profile and settings
   resource :profile, only: [:show, :edit, :update] do
     member do
@@ -34,7 +38,7 @@ Rails.application.routes.draw do
   end
 
   # Job management
-  resources :jobs, only: [:index, :show, :create, :update] do
+  resources :jobs, only: [:index, :show, :new, :create, :update] do
     member do
       post :start
       post :stop
@@ -81,6 +85,8 @@ Rails.application.routes.draw do
       resources :transactions, only: [:index, :show]
     end
   end
+  #Product 
+  resources :products, only: [:index, :show]
 
   # Health and security endpoints
   get "up" => "rails/health#show", as: :rails_health_check

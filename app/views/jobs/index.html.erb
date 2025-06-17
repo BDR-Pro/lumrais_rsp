@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">My Jobs</h1>
+    <%= link_to "New Job", new_job_path, class: "btn btn-primary" if current_user.buyer? %>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @jobs.each do |job| %>
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Job #<%= job.id %></h2>
+          <div class="space-y-2">
+            <p><strong>Status:</strong> <%= job.status.titleize %></p>
+            <p><strong>Created:</strong> <%= time_ago_in_words(job.created_at) %> ago</p>
+            <% if current_user.buyer? %>
+              <p><strong>Seller:</strong> <%= job.seller.email %></p>
+            <% else %>
+              <p><strong>Buyer:</strong> <%= job.buyer.email %></p>
+            <% end %>
+          </div>
+          <div class="card-actions justify-end mt-4">
+            <%= link_to "View Details", job_path(job), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @jobs.empty? %>
+    <div class="text-center py-12">
+      <h3 class="text-xl font-semibold mb-4">No jobs found</h3>
+      <p class="text-gray-600 mb-6">You haven't created or participated in any jobs yet.</p>
+      <%= link_to "Create Your First Job", new_job_path, class: "btn btn-primary" if current_user.buyer? %>
+    </div>
+  <% end %>
+</div> 

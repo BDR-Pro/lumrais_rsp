@@ -1,5 +1,36 @@
-<h2><%= @seller.name %></h2>
-<p>CPU: <%= @seller.cpu %></p>
-<p>RAM: <%= @seller.ram %> MB</p>
-<p>Location: <%= @seller.location %></p>
+<div class="container mx-auto px-4 py-8">
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-2xl font-bold mb-4"><%= @seller.name %></h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="stats shadow">
+          <div class="stat">
+            <div class="stat-title">CPU Cores</div>
+            <div class="stat-value text-primary"><%= @seller.cpu %></div>
+            <div class="stat-desc">Available for rent</div>
+          </div>
+        </div>
+
+        <div class="stats shadow">
+          <div class="stat">
+            <div class="stat-title">RAM</div>
+            <div class="stat-value text-primary"><%= @seller.ram %> MB</div>
+            <div class="stat-desc">Memory available</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <div class="badge badge-lg badge-outline">Location: <%= @seller.location %></div>
+        <div class="badge badge-lg badge-outline ml-2">Status: <%= @seller.available ? 'Available' : 'Busy' %></div>
+      </div>
+
+      <div class="card-actions justify-end mt-6">
+        <%= link_to "Back to Sellers", sellers_path, class: "btn btn-outline" %>
+        <%= link_to "Contact Seller", "#", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
 

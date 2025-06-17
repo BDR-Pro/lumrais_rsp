@@ -1,0 +1,30 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Available Products</h1>
+    <%= link_to "Sell Your Resources", new_seller_path, class: "btn btn-primary" if current_user&.can_become_seller? %>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @products.each do |product| %>
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title"><%= product.name %></h2>
+          <p class="text-2xl font-bold text-primary"><%= product.formatted_price %></p>
+          <p class="text-sm text-gray-600"><%= product.specs_summary %></p>
+          <p class="mt-2"><%= product.description %></p>
+          <div class="card-actions justify-end mt-4">
+            <%= link_to "View Details", product_path(product), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @products.empty? %>
+    <div class="text-center py-12">
+      <h3 class="text-xl font-semibold mb-4">No products available</h3>
+      <p class="text-gray-600 mb-6">Check back later for new products or become a seller to offer your resources.</p>
+      <%= link_to "Become a Seller", new_seller_path, class: "btn btn-primary" if current_user&.can_become_seller? %>
+    </div>
+  <% end %>
+</div> 

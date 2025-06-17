@@ -1,13 +1,22 @@
 <div id="promote-role">
   <% if user.buyer? %>
     <p class="text-muted">You're now a buyer again.</p>
-    <%= button_to "Become a Seller", promote_to_seller_path,
-          method: :post,
-          class: "btn btn-success" %>
+    <%= button_to "Become a Seller", 
+                  promote_seller_path(user.seller),
+                  method: :post,
+                  class: "btn btn-warning",
+                  data: { turbo: true } %>
+
+          
   <% elsif user.seller? %>
     <p class="text-success">You're now a seller.</p>
-    <%= button_to "Switch back to Buyer", demote_to_buyer_path,
-          method: :post,
-          class: "btn btn-warning" %>
+    <%= button_to "Switch back to Buyer",
+                  demote_seller_path(user.seller),
+                  method: :post,
+                  class: "btn btn-warning",
+                  data: { turbo: true } %>
+
   <% end %>
+  
 </div>
+

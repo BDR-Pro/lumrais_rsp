@@ -3,18 +3,26 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :seller, dependent: :destroy
-  has_many :jobs, dependent: :destroy
+  has_many :buyer_jobs, class_name: "Job", foreign_key: "buyer_id", dependent: :destroy
+  has_many :seller_jobs, class_name: "Job", foreign_key: "seller_id", dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :transactions, dependent: :destroy
   has_one :hardware_spec, dependent: :destroy
+
+  # Combined jobs association
+  has_many :jobs, -> { distinct }, through: :buyer_jobs, source: :job
+  has_many :jobs, -> { distinct }, through: :seller_jobs, source: :job
 
   after_initialize :set_default_role, if: :new_record?
 
   has_one_attached :avatar
 
-  validates :username, presence: true, uniqueness: true, length: { minimum: 3, maximum: 50 }
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :role, presence: true, inclusion: { in: %w[buyer seller admin] }
+
+  def jobs
+    Job.where("buyer_id = ? OR seller_id = ?", id, id)
+  end
 
   def buyer?
     role == "buyer"
@@ -33,7 +41,7 @@ class User < ApplicationRecord
   end
 
   def avatar_url
-    avatar.attached? ? avatar.service_url : "https://via.placeholder.com/150"
+    avatar.attached? ? avatar.service_url : "https://avatar.iran.liara.run/public"
   end
 
   def total_spent
@@ -45,11 +53,11 @@ class User < ApplicationRecord
   end
 
   def active_jobs
-    jobs.active
+    buyer_jobs.active
   end
 
   def completed_jobs
-    jobs.completed
+    buyer_jobs.completed
   end
 
   def average_rating
@@ -61,7 +69,7 @@ class User < ApplicationRecord
   end
 
   def can_become_buyer?
-    seller? && seller.jobs.active.empty?
+    seller? && seller_jobs.active.empty?
   end
 
   private
