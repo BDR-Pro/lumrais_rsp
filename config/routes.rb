@@ -1,71 +1,90 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    get "dashboard/index"
+  # Root and landing pages
+  root to: "pages#landing"
+  get "/landing", to: "pages#landing"
+
+  # Authentication
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
+
+  # User profile and settings
+  resource :profile, only: [:show, :edit, :update] do
+    member do
+      get :payment
+      post :payment, to: 'payments#create'
+      get :withdraw
+      get :earnings
+      get :jobs
+      get :reviews
+    end
   end
-  get "payments/new"
-  get "payments/create"
-  get "profiles/show"
-  get "pages/download"
-  get "pages/quick_run"
-  get "pages/infra_action"
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Seller management
+  resources :sellers, only: [:index, :show] do
+    member do
+      post :promote
+      post :demote
+      get :reviews
+      get :jobs
+      get :earnings
+    end
+    resources :reviews, only: [:create, :update, :destroy]
+  end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Job management
+  resources :jobs, only: [:index, :show, :create, :update] do
+    member do
+      post :start
+      post :stop
+      post :complete
+    end
+  end
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
-  devise_for :users
-  resources :sellers, only: [:index, :show]
-  
-  post "promote_to_seller", to: "users#promote", as: :promote_to_seller
-  post "demote_to_buyer", to: "users#demote", as: :demote_to_buyer
-
-  resources :products
-  
-  get "/about", to: "pages#about", as: :about
-  get "/contact", to: "pages#contact", as: :contact
-  get "/terms",   to: "pages#terms",   as: :terms
-  get "/privacy", to: "pages#privacy", as: :privacy
-  get "/settings", to: "pages#settings"
-
+  # Transaction management
+  resources :transactions, only: [:index, :show] do
+    collection do
+      get :earnings
+      get :spending
+    end
+  end
 
   # Static pages
+  get "/about", to: "pages#about", as: :about
+  get "/contact", to: "pages#contact", as: :contact
+  get "/terms", to: "pages#terms", as: :terms
+  get "/privacy", to: "pages#privacy", as: :privacy
+  get "/settings", to: "pages#settings", as: :settings
+  get "/download", to: "pages#download", as: :download
+  get "/quick_run", to: "pages#quick_run", as: :quick_run
+  get "/infra_action", to: "pages#infra_action", as: :infra_action
+
+  # VPN routes
   vpn_root = Rails.application.config.vpn_root
   get "/vpn", to: redirect(vpn_root)
-  get "/download", to: "pages#download"
-  get "/quick_run", to: "pages#quick_run"
-  get "/infra_action", to: "pages#infra_action"
 
-  #Landing page
-    
-  root to: "pages#landing" 
-  get "/landing", to: "pages#landing"
-    
-  # Profile
-  resource :profile, only: [:show]
-  get "/profile/payment", to: "payments#new"
-  post "/profile/payment", to: "payments#create"
-  get "/profile/withdraw", to: "sellers#withdraw"
-
-
-  #admin routes
+  # Admin namespace
   namespace :admin do
-  get "dashboard", to: "dashboard#index"
+    get "dashboard", to: "dashboard#index"
+    resources :users, only: [:index, :show, :edit, :update]
+    resources :sellers, only: [:index, :show, :edit, :update]
+    resources :jobs, only: [:index, :show]
+    resources :transactions, only: [:index, :show]
+  end
 
+  # API namespace
+  namespace :api do
+    namespace :v1 do
+      resources :sellers, only: [:index, :show]
+      resources :jobs, only: [:index, :show, :create]
+      resources :transactions, only: [:index, :show]
+    end
+  end
 
-  # Security endpoints
+  # Health and security endpoints
+  get "up" => "rails/health#show", as: :rails_health_check
   post '/csp_report', to: 'application#csp_report'
-
-  # Health check endpoint
   get '/health', to: 'health#show'
-  end
-
-  end
+end
   
